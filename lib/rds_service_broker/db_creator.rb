@@ -7,11 +7,13 @@ module RdsServiceBroker
       plan = 'postgres-basic'
 
       opts = Options.new(app_name, env, plan)
-      db = Database.new(opts)
+      db = Database::Placeholder.new(opts)
       puts "Creating database instance: #{opts.db_instance_id}"
       db.create
 
-      puts db.database_url
+      instance = db.available_instance
+      wrapped = Database::Instance.new(instance, opts.db_pass)
+      puts wrapped.database_url
     end
     module_function :run
   end
