@@ -15,8 +15,6 @@ module RdsServiceBroker
     module_function :generate_plan_opts
 
     def run
-      rds = Aws::RDS::Client.new(region: 'us-east-1')
-
       # TODO take as params
       app_name = 'c2'
       env = 'staging'
@@ -61,22 +59,12 @@ module RdsServiceBroker
       opts.merge!(plan_opts)
 
 
+      db = Database.new(opts)
       puts "Creating database instance: #{db_instance_id}"
-      rds.create_db_instance(opts)
-
-      print "Waiting"
-      # blocking (via `sleep`)
-      rds.wait_until(:db_instance_available, db_instance_identifier: db_instance_id) do |w|
-        w.before_wait do |attempts, response|
-          print '.'
-        end
-      end
-      print "\n"
+      db.create
 
       puts "Retrieving instance endpoint..."
-      resp = rds.describe_db_instances(db_instance_identifier: db_instance_id)
-      instance = resp.db_instances.first
-      endpoint = instance.endpoint
+      endpoint = db.endpoint
 
       # TODO change based on plan
       db_url = "postgresql://#{db_user}:#{db_pass}@#{endpoint.address}:#{endpoint.port}/#{db_name}"
