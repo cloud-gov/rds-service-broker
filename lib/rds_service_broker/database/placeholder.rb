@@ -14,6 +14,7 @@ module RdsServiceBroker
       end
 
       def create
+        puts "Creating database instance: #{self.opts.db_instance_id}"
         self.client.create_db_instance(self.opts.to_hash)
       end
 
@@ -29,12 +30,12 @@ module RdsServiceBroker
       end
 
       def fetch_instance
+        puts "Retrieving instance details..."
         resp = client.describe_db_instances(db_instance_identifier: db_instance_id)
         resp.db_instances.first
       end
 
       def fetch_available_instance
-        puts "Retrieving instance details..."
         self.wait_for_instance_available
         self.fetch_instance
       end

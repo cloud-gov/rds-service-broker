@@ -9,7 +9,6 @@ module RdsServiceBroker
 
       opts = Options.new(org, app_name, env, plan)
       db = Database::Placeholder.new(opts)
-      puts "Creating database instance: #{opts.db_instance_id}"
       db.create
 
       instance = db.available_instance
