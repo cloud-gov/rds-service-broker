@@ -1,4 +1,4 @@
-describe 'DbCreator' do
+describe RdsServiceBroker::DbCreator do
   describe '.run' do
     def set_up_instance_mock
       endpoint = double(address: 'foo.bar.com', port: 5432)
@@ -20,6 +20,7 @@ describe 'DbCreator' do
     end
 
     it "sends the creation info to the AWS API" do
+      allow_any_instance_of(RdsServiceBroker::Options).to receive(:db_pass).and_return('randompass')
       expect_any_instance_of(Aws::RDS::Client).to receive(:create_db_instance).with(
         engine: 'postgres',
         db_name: 'myapp',
@@ -50,6 +51,7 @@ describe 'DbCreator' do
     end
 
     it "prints the database URL" do
+      allow_any_instance_of(RdsServiceBroker::Options).to receive(:db_pass).and_return('randompass')
       expect_any_instance_of(Aws::RDS::Client).to receive(:create_db_instance)
       expect_any_instance_of(Aws::RDS::Client).to receive(:wait_until)
 
