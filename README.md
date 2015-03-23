@@ -1,5 +1,7 @@
 # RDS Service Broker for Cloud Foundry
 
+[![Build Status](https://travis-ci.org/18F/rds-service-broker.svg?branch=master)](https://travis-ci.org/18F/rds-service-broker)
+
 (Eventually will be) a [service](http://docs.cloudfoundry.org/services/) broker for [Cloud Foundry](http://cloudfoundry.org), which will create and manage [Relational Database Service](http://aws.amazon.com/rds/) instances in [Amazon Web Services](http://aws.amazon.com/).
 
 ## Current status

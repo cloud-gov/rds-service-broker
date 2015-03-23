@@ -2,6 +2,8 @@ describe 'DbCreator' do
   describe '.run' do
     before do
       # TODO unset after test
+      ENV['AWS_ACCESS_KEY_ID'] = 'keyid'
+      ENV['AWS_SECRET_ACCESS_KEY'] = 'secretkey'
       ENV['SUBNET'] = 'foo'
       ENV['VPC_GROUP_ID'] = 'bar'
     end
