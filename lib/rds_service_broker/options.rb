@@ -30,8 +30,7 @@ module RdsServiceBroker
     end
 
     def db_pass
-      # TODO make random
-      'randompass'
+      @db_pass ||= SecureRandom.hex(50)
     end
 
     def org_options
