@@ -20,7 +20,7 @@
 require 'webmock/rspec'
 WebMock.disable_net_connect!
 
-require_relative '../create_db'
+require_relative '../lib/rds_service_broker'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
