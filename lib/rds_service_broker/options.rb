@@ -1,10 +1,5 @@
 module RdsServiceBroker
   class Options
-    PLANS = YAML.load_file('plans.yml')
-    PLANS.each do |plan, opts|
-      opts.symbolize_keys!
-    end
-
     attr_reader :app_name, :env, :plan
 
     def initialize(app_name, env, plan)
@@ -74,15 +69,14 @@ module RdsServiceBroker
       }
     end
 
-    def to_hash
-      opts = self.general_opts
-      plan_opts = self.class.plan_opts(plan_size)
-      opts.merge!(plan_opts)
-      opts
+    def plan_opts
+      PlanOptions.by_size(self.plan_size)
     end
 
-    def self.plan_opts(plan_size)
-      PLANS[plan_size] || raise("unknown plan size #{plan_size.inspect}")
+    def to_hash
+      opts = self.general_opts
+      opts.merge!(self.plan_opts)
+      opts
     end
   end
 end
