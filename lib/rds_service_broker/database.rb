@@ -11,11 +11,11 @@ module RdsServiceBroker
     end
 
     def db_instance_id
-      self.opts[:db_instance_id]
+      self.opts.db_instance_id
     end
 
     def create
-      self.client.create_db_instance(self.opts)
+      self.client.create_db_instance(self.opts.to_hash)
     end
 
     def wait_for_instance_available
@@ -35,6 +35,7 @@ module RdsServiceBroker
     end
 
     def fetch_available_instance
+      puts "Retrieving instance details..."
       self.wait_for_instance_available
       self.instance
     end
@@ -45,6 +46,11 @@ module RdsServiceBroker
 
     def endpoint
       @endpoint ||= self.available_instance.endpoint
+    end
+
+    def database_url
+      # TODO change based on engine
+      "postgresql://#{opts.db_user}:#{opts.db_pass}@#{endpoint.address}:#{endpoint.port}/#{opts.db_name}"
     end
   end
 end
