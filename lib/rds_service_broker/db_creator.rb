@@ -2,11 +2,12 @@ module RdsServiceBroker
   module DbCreator
     def run
       # TODO take as params
+      org = 'cap'
       app_name = 'c2'
       env = 'staging'
       plan = 'postgres-basic'
 
-      opts = Options.new(app_name, env, plan)
+      opts = Options.new(org, app_name, env, plan)
       db = Database::Placeholder.new(opts)
       puts "Creating database instance: #{opts.db_instance_id}"
       db.create
