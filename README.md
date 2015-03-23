@@ -16,7 +16,7 @@ Currently just a script that needs to be run manually.
 
     ```bash
     bundle
-    SUBNET=... VPC_GROUP_ID=... bundle exec ruby create_db.yml
+    SUBNET=... VPC_GROUP_ID=... bundle exec ruby create_db.rb
     ```
 
 1. Set the resulting `DATABASE_URL` as an environment variable in your application.

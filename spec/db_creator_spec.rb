@@ -3,9 +3,9 @@ describe 'DbCreator' do
     def set_up_instance_mock
       endpoint = double(address: 'foo.bar.com', port: 5432)
       instance = instance_double(Aws::RDS::DBInstance,
-        db_name: 'c2',
+        db_name: 'myapp',
         endpoint: endpoint,
-        master_username: 'c2'
+        master_username: 'myapp'
       )
       instances_resp = double(db_instances: [instance])
       expect_any_instance_of(Aws::RDS::Client).to receive(:describe_db_instances).and_return(instances_resp)
@@ -22,9 +22,9 @@ describe 'DbCreator' do
     it "sends the creation info to the AWS API" do
       expect_any_instance_of(Aws::RDS::Client).to receive(:create_db_instance).with(
         engine: 'postgres',
-        db_name: 'c2',
-        db_instance_identifier: 'cf-c2-staging',
-        master_username: 'c2',
+        db_name: 'myapp',
+        db_instance_identifier: 'cf-myapp-myenv',
+        master_username: 'myapp',
         master_user_password: 'randompass',
         tags: [
           {
@@ -46,7 +46,7 @@ describe 'DbCreator' do
 
       set_up_instance_mock
 
-      RdsServiceBroker::DbCreator.run
+      RdsServiceBroker::DbCreator.run('cap', 'myapp', 'myenv', 'postgres-basic')
     end
 
     it "prints the database URL" do
@@ -56,8 +56,8 @@ describe 'DbCreator' do
       set_up_instance_mock
 
       expect {
-        RdsServiceBroker::DbCreator.run
-      }.to output(%r{postgresql://c2:randompass@foo\.bar\.com:5432/c2}).to_stdout
+        RdsServiceBroker::DbCreator.run('cap', 'myapp', 'myenv', 'postgres-basic')
+      }.to output(%r{postgresql://myapp:randompass@foo\.bar\.com:5432/myapp}).to_stdout
     end
   end
 end
