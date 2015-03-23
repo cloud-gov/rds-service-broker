@@ -1,0 +1,12 @@
+basic:
+  allocated_storage: 5
+  db_instance_class: db.m1.small
+  multi_az: false
+  # magnetic
+  storage_type: standard
+large:
+  allocated_storage: 20
+  db_instance_class: db.m1.small
+  multi_az: true
+  # SSD
+  storage_type: gp2
