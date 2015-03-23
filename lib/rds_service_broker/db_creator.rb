@@ -1,7 +1,3 @@
-require 'active_support/core_ext/hash/keys'
-require 'aws-sdk'
-require 'yaml'
-
 module RdsServiceBroker
   module DbCreator
     def run
