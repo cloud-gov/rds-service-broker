@@ -1,6 +1,6 @@
 module RdsServiceBroker
   module PlanOptions
-    DATA = YAML.load_file('plans.yml')
+    DATA = YAML.load_file('config/plans.yml')
     DATA.each do |plan, opts|
       opts.symbolize_keys!
     end

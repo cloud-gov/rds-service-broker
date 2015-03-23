@@ -1,10 +1,11 @@
 module RdsServiceBroker
   class Options
-    attr_reader :app_name, :env, :plan
+    attr_reader :app_name, :env, :org, :plan
 
-    def initialize(app_name, env, plan)
+    def initialize(org, app_name, env, plan)
       @app_name = app_name
       @env = env
+      @org = org
       @plan = plan
     end
 
@@ -33,9 +34,12 @@ module RdsServiceBroker
       'randompass'
     end
 
+    def org_options
+      OrgOptions.by_name(self.org)
+    end
+
     def client_tag
-      # TODO map org name to tag value
-      'CAP-20140930-20150930-01'
+      self.org_options[:tag]
     end
 
     def subnet
