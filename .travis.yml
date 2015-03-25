@@ -3,3 +3,5 @@ rvm:
 - 2.2.0
 cache: bundler
 script: bundle exec rspec
+notifications:
+  webhooks: http://project-monitor.cf.18f.us/projects/rds-service-broker/status
