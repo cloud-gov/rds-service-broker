@@ -12,6 +12,7 @@ Currently just a script that needs to be run manually.
 
 1. Set up your [AWS credentials](http://docs.aws.amazon.com/sdkforruby/api/index.html#Credentials).
 1. Clone this repository.
+1. Modify the options in [`create_db.rb`](https://github.com/18F/rds-service-broker/blob/master/create_db.rb).
 1. From within the project directory, run
 
     ```bash
